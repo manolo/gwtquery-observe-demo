@@ -1,0 +1,9 @@
+<module rename-to="observe">
+    <inherits name='com.google.gwt.query.Query'/>
+    <inherits name='com.google.gwt.query.Observe'/>
+    <entry-point class='com.google.gwt.query.client.plugins.ObserveSample'/>
+    <add-linker name="xsiframe"/>
+    <collapse-all-properties value="true" />
+    <set-property name="compiler.stackMode" value="strip" />
+</module>
+
