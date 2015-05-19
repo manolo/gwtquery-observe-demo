@@ -1,0 +1,73 @@
+<!doctype html>
+<html>
+  <head>
+    <script src="observe/observe.nocache.js"></script>
+    <style>
+    body {
+      font-family: arial;
+    }
+    </style>
+  </head>
+  <style>
+  </style>
+  <body>
+    <h1>GwtQuery Observe Plugin Demo</h1>
+	<div>
+	    <h3>Usage</h3>
+		<p>Open your javascript Console and either:
+		<ul>
+			<li>modify the div element contents.
+			<li>or modify objects in js:
+<pre>
+ e.setAttribute('hello','world');
+ o.foo = 'bar';
+ a.push('yep');
+</pre>
+		</ul>
+		<p>
+		<p>
+	    <h3>Example Code</h3>
+	    <pre>
+  final GQuery g =  $("div");
+  final Properties o = $$();
+  final JsArrayString a = JsArray.createArray().cast();
+
+  public void onModuleLoad() {
+    $(window).prop("e", g.get(0)).prop("o", o).prop("a", a);
+
+    g.as(Observe.Observe).mutation(
+             Observe.createMutationInit()
+                    .attributes(true)
+                    .characterData(true)
+                    .childList(true)
+                    .subtree(true),
+             new MutationListener() {
+      public void onMutation(List&lt;MutationRecord> mutations) {
+        for (MutationRecord r: mutations) {
+          console.log("M - > ", r.getDataImpl());
+        }
+      }
+    });
+
+    Observe.observe(o, new ObserveListener() {
+      public void onChange(List&lt;ChangeRecord> changes) {
+        for(ChangeRecord r : changes) {
+          console.log("O -> ", r.getDataImpl());
+        }
+      }
+    });
+
+    Observe.observe(a, new ObserveListener() {
+      public void onChange(List&lt;ChangeRecord> changes) {
+        for(ChangeRecord r : changes) {
+          console.log("A -> ", r.getDataImpl());
+        }
+      }
+    });
+  }
+	    </pre>
+
+		</p>
+	</div>
+</body>
+</html>
